@@ -4,7 +4,7 @@ var height = window.innerHeight;
 const backgroundColor = 'rgb(255,255,255)';
 const terrainColor = 'rgba(115, 195, 115, 0.2)';
 const lineColor = 'rgba(62,104,139,1)';
-const urlBase = "https://datazoomamazonia.com.br/?s="
+const urlBase = "https://datazoomamazonia.com.br/tag/"
 const tablePath = 'assets/categorias.csv';
 var showNet = false;
 
@@ -135,7 +135,15 @@ function draw() {
 function mouseClicked() {
     // on click open url for closest node
     let node = net.getClosestNode(mouseX, mouseY);
+    // extract name of the node clicked
     let tag = node.name;
+    // turn into lowercase
+    tag = tag.toLowerCase();
+    // turn spaces " " into hypens "-"
+    tag = tag.replace(/\s+/g,"_");
+    // remove accents
+    tag = tag.String.prototype.normalize()
+    // paste into base URL
     let url = urlBase + tag;
     window.open(url);
 }
