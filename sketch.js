@@ -145,5 +145,10 @@ function mouseClicked() {
     tag = tag.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     // paste into base URL
     let url = urlBase + tag;
+    // when user clicks on the Data Zoom node, the corresponding link does not exist
+    if (tag == "data-zoom") {
+    // instead, link to Data Zoom page
+    url = "https://www.econ.puc-rio.br/datazoom/index.html"
+    }
     window.open(url);
 }
