@@ -142,7 +142,7 @@ function mouseClicked() {
     // turn spaces " " into hypens "-"
     tag = tag.replace(/\s+/g,"_");
     // remove accents
-    tag = tag.String.prototype.normalize()
+    tag = tag.String.prototype.normalize();
     // paste into base URL
     let url = urlBase + tag;
     window.open(url);
