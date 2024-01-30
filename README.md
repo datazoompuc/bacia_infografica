@@ -21,3 +21,13 @@ Após publicar no [GitHub Pages](https://docs.github.com/es/pages/quickstart) ou
   </iframe>
 </div>
 ```
+
+### Observações para manutenção:
+
+* O arquivo [sketch.js](sketch.js) extrai as categorias do arquivo [assets/categorias.csv](assets/categorias.csv) que geram os nós do rio, e usa seus nomes para montar os links.
+* O rio pode ser testado localmente a partir de uma branch, sem ser publicado, seguindo as instruções [daqui](https://stackoverflow.com/questions/38497334/how-to-run-html-file-on-localhost). Recomendo:
+    1. Ter o Python instalado
+    2. Abrir a branch que está usando no GitHub Desktop
+    3. Digitar `cd endereco/da/pasta/bacia_infografica` no cmd
+    4. Rodar `python -m http.server` no cmd
+    5. Abrir o endereço [localhost:8000](localhost:8000) em um navegador (para mim não funcionou no Chrome)  
