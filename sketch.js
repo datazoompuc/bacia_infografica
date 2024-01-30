@@ -140,9 +140,9 @@ function mouseClicked() {
     // turn into lowercase
     tag = tag.toLowerCase();
     // turn spaces " " into hypens "-"
-    tag = tag.replace(/\s+/g,"_");
+    tag = tag.replace(/\s+/g,"-");
     // remove accents
-    tag = tag.String.prototype.normalize();
+    tag = tag.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     // paste into base URL
     let url = urlBase + tag;
     window.open(url);
