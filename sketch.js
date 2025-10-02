@@ -4,7 +4,7 @@ var height = window.innerHeight;
 const backgroundColor = 'rgb(255,255,255)';
 const terrainColor = 'rgba(115, 195, 115, 0.2)';
 const lineColor = 'rgba(62,104,139,1)';
-const urlBase = "https://datazoomamazonia.com.br/tag/"
+const urlBase = "https://datazoom.com.br/amazonia/pt/viz/"
 const tablePath = 'assets/categorias.csv';
 var showNet = false;
 
@@ -133,22 +133,11 @@ function draw() {
 
 // handle mouse click event
 function mouseClicked() {
-    // on click open url for closest node
-    let node = net.getClosestNode(mouseX, mouseY);
-    // extract name of the node clicked
-    let tag = node.name;
-    // turn into lowercase
-    tag = tag.toLowerCase();
-    // turn spaces " " into hypens "-"
-    tag = tag.replace(/\s+/g,"-");
-    // remove accents
-    tag = tag.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    // paste into base URL
-    let url = urlBase + tag;
-    // when user clicks on the Data Zoom node, the corresponding link does not exist
-    if (tag == "data-zoom") {
-    // instead, link to Data Zoom page
-    url = "https://www.econ.puc-rio.br/datazoom/index.html"
-    }
-    window.open(url);
+  const node = net.getClosestNode(mouseX, mouseY);
+
+  if (node.url) {
+    window.open(urlBase + node.url);
+  } else if (node.name.toLowerCase().trim() === "data<br>zoom") {
+    window.open("https://www.datazoom.com.br"); 
+  }
 }
