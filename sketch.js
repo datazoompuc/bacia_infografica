@@ -4,7 +4,7 @@ var height = window.innerHeight;
 const backgroundColor = 'rgb(255,255,255)';
 const terrainColor = 'rgba(115, 195, 115, 0.2)';
 const lineColor = 'rgba(62,104,139,1)';
-const urlBase = "https://datazoomamazonia.com.br/tag/"
+const urlBase = "https://datazoom.com.br/amazonia/en/tag"
 const tablePath = 'assets/categorias.csv';
 var showNet = false;
 
@@ -148,7 +148,7 @@ function mouseClicked() {
     // when user clicks on the Data Zoom node, the corresponding link does not exist
     if (tag == "data-zoom") {
     // instead, link to Data Zoom page
-    url = "https://www.econ.puc-rio.br/datazoom/index.html"
+    url = "https://datazoom.com.br/amazonia/en/"
     }
     window.open(url);
 }
