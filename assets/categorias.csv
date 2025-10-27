@@ -1,7 +1,8 @@
-Data Zoom,categoria,subcategoria
-Data Zoom,Economia,Comércio Exterior
-Data Zoom,Economia,Mercado de trabalho
-Data Zoom,Meio ambiente,Desmatamento
-Data Zoom,Social,Desenvolvimento
-Data Zoom,Social,Saúde
-Data Zoom,Economia,Energia
+Data Zoom,categoria,subcategoria,url
+Data<br>Zoom,Economia,Comércio Exterior,comercio-exterior
+Data<br>Zoom,Economia,Mercado de Trabalho,mercado-de-trabalho
+Data<br>Zoom,Meio Ambiente,Desmatamento,desmatamento
+Data<br>Zoom,Meio Ambiente,Agropecuária,agropecuaria
+Data<br>Zoom,Social,Desenvolvimento,desenvolvimento
+Data<br>Zoom,Social,Saúde,saude
+Data<br>Zoom,Economia,Energia,energia

@@ -1,13 +1,14 @@
 // Create force directed nodes
 
 class Node {
-    constructor(x, y, label = "", level = 0) {
+    constructor(x, y, label = "", level = 0, url = null) {
         // variables
         this.pos = createVector(x, y);
         this.force = createVector(0, 0);
         this.mass = 2 * PI * (5 / (1 + level));
         this.size = 50 / (level + 1);
         this.name = label;
+    	this.url = url; 
         this.selected = false;
         this.level = level;
         this.hoverText = this.createHoverText();
@@ -16,7 +17,8 @@ class Node {
     createHoverText() {
         let element = createP(this.name);
         element.parent("canvas_div");
-        element.position(this.x, this.y);
+	element.html(this.name);
+        element.position(this.pos.x, this.pos.y);
 
         return element;
     }
@@ -50,46 +52,41 @@ class Network {
         this.maxCicles = 500;
     }
 
-    // Create nodes and links from a csv file
-    networkFromCSV(table) {
-        var nodeList = [];
-        var linkList = [];
+// Build nodes and links from CSV
+networkFromCSV(table) {
 
-        // loop the table to add nodes
-        for (let r = 0; r < table.getRowCount(); r++) {
-            // loop columns
-            for (let c = 0; c < table.getColumnCount(); c++) {
-                let nodeName = table.getString(r, c);
-                let nodeLevel = c;
+  // Create nodes (ignore last column = url)
+  for (let r = 0; r < table.getRowCount(); r++) {
+    const lastColIndex = table.getColumnCount() - 1;
 
-                // if can't find node, create on a random position
-                let nodeIndex = this.nodes.findIndex(n => n.name == nodeName);
-                if (nodeIndex < 0) {
-                    let x = random(0, width);
-                    let y = random(0, height);
-                    this.nodes.push(new Node(x, y, nodeName, nodeLevel));
-                }
-            }
-        }
+    for (let c = 0; c < lastColIndex; c++) {
+      const nodeName  = table.getString(r, c);
+      const nodeLevel = c;
 
-        // after adding nodes, loop table to add links
-        for (let r = 0; r < table.getRowCount(); r++) {
-            for (let c = 0; c < table.getColumnCount() - 1; c++) {
-                let linkSource = table.getString(r, c);
-                let linkTarget = table.getString(r, c + 1);
-                let linkSourceIndex = this.nodes.findIndex(n => n.name == linkSource);
-                let linkTargetIndex = this.nodes.findIndex(n => n.name == linkTarget);
-                let distance = 300;
+      // Subcategory gets its url from the last column
+      let nodeUrl = null;
+      if (c === lastColIndex - 1) {
+        nodeUrl = table.getString(r, lastColIndex);
+      }
 
-                // add links that don't exists
-                let linkIndex = this.links.findIndex(l => l.source == linkSourceIndex && l.target == linkTargetIndex);
-                if (linkIndex < 0) {
-                    this.links.push(new Link(linkSourceIndex, linkTargetIndex, distance));
-                }
-            }
-        }
+      if (this.nodes.findIndex(n => n.name == nodeName) < 0) {
+        this.nodes.push(new Node(random(0, width), random(0, height), nodeName, nodeLevel, nodeUrl));
+      }
     }
+  }
 
+  // Create links (do not connect to url column)
+  for (let r = 0; r < table.getRowCount(); r++) {
+    for (let c = 0; c < table.getColumnCount() - 2; c++) {
+      const s = this.nodes.findIndex(n => n.name == table.getString(r, c));
+      const t = this.nodes.findIndex(n => n.name == table.getString(r, c + 1));
+
+      if (s >= 0 && t >= 0 && this.links.findIndex(l => l.source == s && l.target == t) < 0) {
+        this.links.push(new Link(s, t, 300));
+      }
+    }
+  }
+}
     // Force that bring all nodes to a position
     applyGravityForce() {
         for (let node of this.nodes) {
